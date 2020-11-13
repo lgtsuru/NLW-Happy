@@ -1,0 +1,96 @@
+BACKEND
+yarn init -y >> Cria o arquivo package.json
+yarn add express >> adiciona o EXPRESS (framework que ajuda a gerir as requisições e respostas no Node)
+yarn add @types/express -D
+yarn add typescript -D  >> por padrão o Node não entende TypeScript, somente JavaScript
+yarn tsc --init >> TSC (TypeScript), vai criar o arquivo tsconfig.json
+    atualizamos:
+    "target": "es5",  >>  "target": "es2017", >> que é o versionamento o ECMAScript
+yarn add ts-node-dev -D  >> pacote para conseguirmos executar nosso projeto usando o Node e o Typescript
+
+Dentro do PACKAGE.JSON
+Adicionamos o script abaixo que inicia a backend
+"scripts":{
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts"
+    --transpile-only >> evita que o node fique fazendo verificacoes de erros que ja serao feitas no editor
+    --ignore-watch node_modules >> evita que o node fique varrendo a pasta node_modules por atualizacoes, acelerando o processo
+
+Dentro do SERVER.TS
+
+app.get('/users', (request, response) => {
+    return response.json({ message: 'Hello World' });
+});
+Rota = conjunto
+Recurso = usuário
+
+Metodos HTTP = GET, POST, PUT, DELETE
+Parâmetros
+GET = Buscar uma informação (Lista, Item)
+POST = Criando uma informação
+PUT = Editando uma informação
+DELETE = Deletando uma informação
+
+Existem 3 tipos de Parâmetros
+Query Params: http://localhost:3333/users?search=diego
+Route Params: http://localhost:3333/users/1 (Identificar um recurso)
+Body: http://localhost:3333/users (Identificar um recurso) info vem de formularios
+
+BANCO DE DADOS
+yarn add typeorm sqlite3
+criou manualmente os arquivos 'database\database.sqlite' e 'src\ormconfig.json'
+
+Adicionamos nos scripts, para habilitar as migrations (criação do banco de dados), pois o TypeOrm nao entende TypeScript
+"typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
+
+yarn dev >> starta o banco
+yarn typeorm >> habilita as migrations com TypeScript
+
+yarn typeorm migration:create -n create_orphanage >>VAI CRIAR O ARQUIVO MIGRATION (C/ TIMESTAMP) DENTRO DA PASTA MIGRATION
+yarn typeorm migration:run >> VAI CRIAR A TABELA DE ACORDO COM O ARQUIVO ACIMA
+yarn typeorm migration:revert >> REVERTE A CRIAÇÃO DA TABELA
+
+yarn typeorm migration:create -n create_images
+yarn typeorm migration:run
+
+TSCONFIG.JSON
+alteramos "strictPropertyInitialization": false, PARA FALSO PODENDO ASSIM DEFINIR AS VARIAVEIS DA CLASSE ORPHANAGE (DENTRO DO ORPHANAGE.TS) SEM PRECISAR COLOCAR VALORES DE INICIALIZACAO
+"experimentalDecorators": true,
+"emitDecoratorMetadata": true, AMBAS HABILITADAS PARA LIBERAR A API DECORATOR
+
+ORMCONFIG.JSON
+Adicionamos o codigo, para evitar o erro 'RepositoryNotFoundError' durante a alimentação do database. Durante a criação da pasta models, esquecemos de uma configuração, quando adicionamos as migrations no arquivo em questao.
+"entities": [
+        "./src/models/*.ts"
+    ],
+
+PADRAO MVC
+M => model (representacao da tabela no banco)
+V => Views (como as coisas são visualizadas)
+C => Controllers (onde ficam as logicas das nossas rotas)
+
+PACOTE GERENCIADOR DE UPLOAD DE IMAGENS
+yarn add multer
+yarn add @types/multer -D
+
+O JSON (Insomnia) não funciona com upload de imagens. Devemos então usar o 'Multipart'
+
+{
+	"name": "Lar Moisés",
+	"latitude": -25.457951,
+	"longitude": -49.203681,
+	"about": "Sobre o orfanato",
+	"instructions": "Venha visitar",
+	"opening_hours": "Das 8h até as 18h",
+	"open_on_weekends": true
+}
+
+TRATAMENTO DE EXCECOES
+yarn add express-async-errors
+
+VALIDACAO DE DADOS
+yarn add yup
+yarn add @types/yup -D
+
+PERMITIR QUE A API SEJA ACESSADA DE OUTROS DOMINIOS
+yarn add cors
+yarn add @types/cors -D
