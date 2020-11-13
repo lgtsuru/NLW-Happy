@@ -1,0 +1,52 @@
+JSON – Java Script Object Notation
+SPA – Single Page Application
+
+PARA CRIAR A APLICAÇÃO REACT COM O NOME web COM TEMPLATE TypeScript (dentro do diretorio aulas)
+yarn create react-app web --template typescript
+
+JSX (TypeScript XML) - permite a inclusao de HTML dentro do JS ou TS
+
+React-Dom >> integração do REACT com a DOM (Arvore de Elementos do HTML)
+
+INSTALACAO DE ICONES (FLECHAS DOS BOTOES)
+yarn add react-icons
+
+MODULO DE ROTEAMENTO (Google 'react router dom')
+yarn add react-router-dom
+yarn add @types/react-router-dom -D
+
+LANDING
+<Route path="/" exact component={Landing} /> A propriedade 'exact' serve para que o router possa diferenciar a pagina que vai chamar no inicio (usar na Landig page)
+<Switch></Switch> serve para apenas uma unica rota seja exibida em tela
+import {Link} from 'react-router-dom'; >> o Link é o responsável por evitar com que a pagina seja sempre carregada do zero e reaproveite todos os itens que serão utilizados novamente.
+<aside></aside> usado para "Side-bars"
+
+MAPAS
+GoogleMaps, mas a API é paga
+Leaflet (buscar no Google)
+yarn add leaflet react-leaflet >> React Leaflet (buscar no Google)
+yarn add @types/react-leaflet -D
+TyleLayer >> servidor que eu possa pegar as imagens do mapa (open street map >> google)
+
+CONEXÃO DO BACKEND COM FRONTEND
+yarn add axios
+
+FUNCAO USEEFFECT
+useEffect(() => {}, []);
+Executa esta funcao () => {} quando algum parametro dentro deste array [] for modificado
+Se o array [] for passado vazio, esta função será executada somente uma vez.
+Bom colocar a chamada da API dentro do useEffect para evitar que ela seja chamada sempre que o componente sofrer alguma atualização.
+Existem mais detalhes sobre o Hooks e suas funcoes em videos e posts da RocketSeat
+
+USESTATE
+const XXXXXXX = useState([]);
+é o Estado >> Qualquer tipo de informação que eu que será manipulada dentro do meu compontente.
+Toda vez que vc tiver uma variavel que precisa ser alterada pelo próprio componente, ela deverá ser salva no estado.
+const [orphanages, setOrphanages] = useState([]);
+
+rel="noopener noreferrer" >> Evita ataques (segurança)
+
+ENVIO DE imagens
+duarante o envio de imagens, não é possivel usar o método JSON (no Insomnia tb), devemos usar o Multipart (no Insomnia) e o FormData() no VSCode
+
+
